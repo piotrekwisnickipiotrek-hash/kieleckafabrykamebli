@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KieleckaFabrykaMebli.pl - Notatnik</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="loginView" class="login-shell">
+      <main class="login-panel">
+        <p class="eyebrow">Dostep pracownika</p>
+        <h1>KieleckaFabrykaMebli.pl</h1>
+        <p class="muted">Podaj imie i nazwisko przy pierwszym wejsciu. Przegladarka zapamieta Cie przy kolejnych wizytach.</p>
+        <form id="loginForm" class="stack">
+          <label>
+            Imie i nazwisko
+            <input id="employeeName" name="employeeName" type="text" autocomplete="name" placeholder="np. Anna Kowalska" required />
+          </label>
+          <button type="submit">Wejdz do notatnika</button>
+        </form>
+      </main>
+    </div>
+
+    <div id="appView" class="app-shell hidden">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Zespolowy panel</p>
+          <h1>KieleckaFabrykaMebli.pl</h1>
+        </div>
+        <div class="user-box">
+          <span id="currentUser"></span>
+          <button id="changeUserBtn" type="button" class="secondary">Zmien osobe</button>
+        </div>
+      </header>
+
+      <section class="toolbar" aria-label="Filtry">
+        <div class="search-wrap">
+          <span aria-hidden="true">Szukaj</span>
+          <input id="searchInput" type="search" placeholder="klient, produkt, opis, pracownik..." />
+        </div>
+        <button id="refreshBtn" type="button" class="secondary">Odswiez</button>
+      </section>
+
+      <main class="layout">
+        <section class="panel note-composer">
+          <div class="section-heading">
+            <h2>Szybka notatka</h2>
+            <p>Widoczna dla wszystkich osob w zespole.</p>
+          </div>
+          <form id="noteForm" class="stack">
+            <textarea id="noteContent" rows="8" placeholder="Wpisz dowolna notatke, ustalenia, przypomnienie..." required></textarea>
+            <button type="submit">Dodaj notatke</button>
+          </form>
+        </section>
+
+        <section class="panel client-composer">
+          <div class="section-heading">
+            <h2>Dane klienta</h2>
+            <p>Zapisz, czego szukal klient, kiedy i co trzeba dopilnowac.</p>
+          </div>
+          <form id="clientForm" class="client-form">
+            <input type="hidden" id="clientId" />
+            <label>
+              Klient
+              <input id="clientName" type="text" placeholder="Imie, nazwisko lub firma" required />
+            </label>
+            <label>
+              Czego szukal
+              <input id="searchedFor" type="text" placeholder="Produkt, usluga, temat..." required />
+            </label>
+            <label>
+              Kontakt
+              <input id="contact" type="text" placeholder="Telefon, e-mail lub inny kontakt" />
+            </label>
+            <label>
+              Data
+              <input id="clientDate" type="date" />
+            </label>
+            <label>
+              Status
+              <select id="status">
+                <option>Nowe</option>
+                <option>W trakcie</option>
+                <option>Oddzwonic</option>
+                <option>Zamowione</option>
+                <option>Zamkniete</option>
+              </select>
+            </label>
+            <label class="wide">
+              Szczegoly
+              <textarea id="details" rows="5" placeholder="Rozmiar, budzet, preferencje, ustalenia, termin kontaktu..."></textarea>
+            </label>
+            <div class="form-actions wide">
+              <button id="saveClientBtn" type="submit">Dodaj klienta</button>
+              <button id="cancelEditBtn" type="button" class="secondary hidden">Anuluj edycje</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="content-area">
+          <div class="section-heading">
+            <h2>Zapytania klientow</h2>
+            <p id="clientCounter"></p>
+          </div>
+          <div id="clientList" class="client-list"></div>
+        </section>
+
+        <section class="content-area">
+          <div class="section-heading">
+            <h2>Notatki</h2>
+            <p id="noteCounter"></p>
+          </div>
+          <div id="noteList" class="note-list"></div>
+        </section>
+      </main>
+    </div>
+
+    <template id="clientCardTemplate">
+      <article class="record-card">
+        <div class="record-main">
+          <div>
+            <p class="record-date"></p>
+            <h3></h3>
+          </div>
+          <span class="status-pill"></span>
+        </div>
+        <p class="searched"></p>
+        <p class="contact"></p>
+        <p class="details"></p>
+        <footer>
+          <span class="meta"></span>
+          <div class="card-actions">
+            <button type="button" class="secondary edit-client">Edytuj</button>
+            <button type="button" class="danger delete-client">Usun</button>
+          </div>
+        </footer>
+      </article>
+    </template>
+
+    <template id="noteTemplate">
+      <article class="note-card">
+        <textarea rows="4"></textarea>
+        <footer>
+          <span class="meta"></span>
+          <div class="card-actions">
+            <button type="button" class="secondary save-note">Zapisz</button>
+            <button type="button" class="danger delete-note">Usun</button>
+          </div>
+        </footer>
+      </article>
+    </template>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
